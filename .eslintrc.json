@@ -1,0 +1,35 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    "window": true,
+    "fetch": true,
+    "FormData": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx"]
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "react/forbid-prop-types": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/interactive-supports-focus": "off",
+    "react/jsx-wrap-multilines": "off",
+    "arrow-parens": "off",
+    "react/prop-types": "off",
+    "space-before-function-paren": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "react/require-default-props": "off",
+    "react/no-unused-prop-types": "off",
+    "function-paren-newline": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-bitwise": "off",
+    "camelcase": "off",
+    "semi": "error",
+    "comma-dangle": "error",
+    "indent": ["error", 2],
+    "react/jsx-indent": ["error", 2]
+  }
+}
