@@ -12,7 +12,6 @@ export function fetchClient(url, params) {
     if (response.status !== 200) {
       throw response;
     } else {
-      console.log('work', config);
       return response.json();
     }
   });

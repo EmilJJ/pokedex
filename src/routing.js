@@ -9,6 +9,8 @@ const NotFound = () => (
   </div>
 );
 
+const MainPage = () => <div>Main page</div>;
+
 const MainRouter = props => (
   <Router {...props}>
     <Route path="/" component={PokemonsList} />

@@ -19,9 +19,10 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "bootstrap": "^4.0.0",
-    "bootstrap-material-design": "^4.1.1",
+    "bootstrap-material-design": "4.1.1",
     "bootstrap-material-design-icons": "^2.2.0",
     "lodash": "^4.17.5",
+    "pagination": "react-bootstrap/pagination",
     "react": "^16.3.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.3.0",

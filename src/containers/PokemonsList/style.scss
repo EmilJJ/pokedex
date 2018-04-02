@@ -7,10 +7,11 @@
 
   .pokemons-list__title {
     text-align: center;
+    font-size: 4.6em;
   }
 
   .pokemons-list__panel {
-    padding: 5px 5px 0 5px;
+    margin-top: 20px;
     height: auto;
     border-radius: 4px;
     box-shadow: 9px 1px 80px -40px rgba(71, 71, 71, 1);
@@ -20,4 +21,12 @@
 
 .pokemons-list__table-header {
   text-align: center;
+}
+
+.table thead th {
+  font-size: 1.6em;
+}
+
+.table tbody tr td {
+  font-size: 1.6em;
 }

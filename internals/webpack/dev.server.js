@@ -8,6 +8,7 @@ const { host, port } = config;
 const devServer = new WebpackDevServer(Webpack(webpackConfig), {
   noInfo: true,
   hot: true,
+
   stats: { color: true },
   contentBase: webpackConfig.output.path,
   publicPath: webpackConfig.output.publicPath,
