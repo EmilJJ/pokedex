@@ -4,23 +4,34 @@ import {
   POKEMONS_WAS_LOADED,
   LOAD_POKEMONS_BY_TYPE,
   LOAD_ALL_POKEMONS,
+  POKEMON_LOADED,
 } from '../constants/pokemons';
 
 const pokemonsList = combineEvents(
   {
     [POKEMONS_WAS_LOADED]: (
       state,
-      { pokemons: { list, count, pagination: { offset, limit } } },
+      { pokemons: { list, count, pagination: { offset, limit, currentPage } } },
     ) => ({
       list,
-      count,
       pagination: {
         offset,
         limit,
+        count,
+        currentPage,
       },
     }),
   },
-  { list: [], count: 0, pagination: { offset: 0, limit: 0 } },
+  {
+    list: [],
+    pagination: {
+      offset: 0,
+      limit: 0,
+      count: 0,
+      currentPage: 1,
+      previousPage: 1,
+    },
+  },
 );
 
 const pokemonFilter = combineEvents(
@@ -37,4 +48,11 @@ const pokemonFilter = combineEvents(
   },
 );
 
-export default combineReducers({ pokemonsList, pokemonFilter });
+const currentPokemon = combineEvents(
+  {
+    [POKEMON_LOADED]: (state, action) => action.pokemon,
+  },
+  null,
+);
+
+export default combineReducers({ pokemonsList, pokemonFilter, currentPokemon });

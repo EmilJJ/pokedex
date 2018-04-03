@@ -9,4 +9,3 @@ export const Table = ({ columns, rows, className, ...restProps }) => (
     <tbody>{rows}</tbody>
   </BootstrapTable>
 );
-1;
