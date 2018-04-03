@@ -1,16 +1,19 @@
 import {
-  LOAD_ALL_POKEMONS,
+  LOAD_POKEMONS,
   LOAD_POKEMONS_BY_TYPE,
   POKEMONS_WAS_LOADED,
   POKEMONS_LOADING_FAILED,
   LOAD_POKEMON_BY_ID,
   POKEMON_LOADED,
+  GO_TO_FIRST_PAGE,
+  GO_TO_LAST_PAGE,
+  CHANGE_RANGE_UP,
+  CHANGE_RANGE_DOWN,
 } from '../constants/pokemons';
 
-export const loadAllPokemons = (offset, limit) => ({
-  type: LOAD_ALL_POKEMONS,
+export const loadPokemons = offset => ({
+  type: LOAD_POKEMONS,
   offset,
-  limit,
 });
 
 export const loadPokemonsByType = pokemonType => ({
@@ -18,9 +21,11 @@ export const loadPokemonsByType = pokemonType => ({
   pokemonType,
 });
 
-export const pokemonsLoaded = pokemons => ({
+export const pokemonsLoaded = (pokemons, count, offset) => ({
   type: POKEMONS_WAS_LOADED,
   pokemons,
+  count,
+  offset,
 });
 
 export const pokemonsLoadingFailed = error => ({
@@ -36,4 +41,21 @@ export const loadPokemonById = id => ({
 export const pokemonLoaded = pokemon => ({
   type: POKEMON_LOADED,
   pokemon,
+});
+
+export const goToFirstPage = () => ({
+  type: GO_TO_FIRST_PAGE,
+});
+
+export const goToLastPage = lastPage => ({
+  type: GO_TO_LAST_PAGE,
+  lastPage,
+});
+
+export const changeRangeUp = () => ({
+  type: CHANGE_RANGE_UP,
+});
+
+export const changeRangeDown = () => ({
+  type: CHANGE_RANGE_DOWN,
 });

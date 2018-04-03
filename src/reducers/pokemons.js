@@ -3,35 +3,39 @@ import combineEvents from '../utils/combineEvents';
 import {
   POKEMONS_WAS_LOADED,
   LOAD_POKEMONS_BY_TYPE,
-  LOAD_ALL_POKEMONS,
+  LOAD_POKEMONS,
   POKEMON_LOADED,
+  GO_TO_FIRST_PAGE,
+  GO_TO_LAST_PAGE,
+  CHANGE_RANGE_DOWN,
+  CHANGE_RANGE_UP,
 } from '../constants/pokemons';
 
-const pokemonsList = combineEvents(
+const list = combineEvents(
   {
-    [POKEMONS_WAS_LOADED]: (
-      state,
-      { pokemons: { list, count, pagination: { offset, limit, currentPage } } },
-    ) => ({
-      list,
-      pagination: {
-        offset,
-        limit,
-        count,
-        currentPage,
-      },
+    [POKEMONS_WAS_LOADED]: (state, { pokemons }) => pokemons,
+  },
+  [],
+);
+
+const pagination = combineEvents(
+  {
+    [POKEMONS_WAS_LOADED]: (state, { count, offset }) => ({
+      ...state,
+      count,
+      offset,
+      activePage: offset,
+    }),
+    [CHANGE_RANGE_DOWN]: state => ({ ...state, begin: state.begin - 1 }),
+    [CHANGE_RANGE_UP]: state => ({ ...state, begin: state.begin + 1 }),
+    [GO_TO_FIRST_PAGE]: state => ({ ...state, begin: 1, activePage: 1 }),
+    [GO_TO_LAST_PAGE]: (state, { lastPage }) => ({
+      ...state,
+      begin: lastPage - 2,
+      activePage: lastPage,
     }),
   },
-  {
-    list: [],
-    pagination: {
-      offset: 0,
-      limit: 0,
-      count: 0,
-      currentPage: 1,
-      previousPage: 1,
-    },
-  },
+  { offset: 0, count: 0, begin: 1, activePage: 1 },
 );
 
 const pokemonFilter = combineEvents(
@@ -39,7 +43,7 @@ const pokemonFilter = combineEvents(
     [LOAD_POKEMONS_BY_TYPE]: (state, action) => ({
       type: action.pokemonType.toUpperCase(),
     }),
-    [LOAD_ALL_POKEMONS]: () => ({
+    [LOAD_POKEMONS]: () => ({
       type: 'ALL',
     }),
   },
@@ -55,4 +59,9 @@ const currentPokemon = combineEvents(
   null,
 );
 
-export default combineReducers({ pokemonsList, pokemonFilter, currentPokemon });
+export default combineReducers({
+  list,
+  pokemonFilter,
+  currentPokemon,
+  pagination,
+});

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { Panel } from 'react-bootstrap';
 import { Table } from '../../components/Table';
-import { PaginationDesktop } from '../../components/Pagination';
-import { loadAllPokemons, loadPokemonsByType } from '../../actions/pokemons';
+import PaginationDesktop from '../../components/Pagination';
+import { loadPokemons, loadPokemonsByType } from '../../actions/pokemons';
 import { PokemonItem } from '../../components/PokemonItem';
 import { FilterDropdown } from '../../components/Dropdown';
 import { loadTypes } from '../../actions/types';
@@ -12,25 +12,25 @@ import './style.scss';
 
 class PokemonsList extends Component {
   componentDidMount() {
-    const { pagination } = this.props.pokemons;
-    const { offset, limit } = pagination;
-    const { loadAllPokemons, loadTypes } = this.props;
+    const { pagination } = this.props;
+    const { offset } = pagination;
+    const { loadPokemons, loadTypes } = this.props;
 
-    loadAllPokemons(offset, limit);
+    loadPokemons(offset);
     loadTypes();
   }
 
   render() {
-    const { list } = this.props.pokemons;
-    const { loadPokemonsByType, loadAllPokemons, types, goTo } = this.props;
+    const { pokemons } = this.props;
+    const { loadPokemonsByType, loadPokemons, types, goTo } = this.props;
     const { type } = this.props.pokemonFilter;
-    const { pagination: { count, offset } } = this.props.pokemons;
+    const { pagination: { count, begin, activePage } } = this.props;
 
     return (
       <div className="pokemons-list">
         <FilterDropdown
           loadPokemonsByType={loadPokemonsByType}
-          loadAllPokemons={loadAllPokemons}
+          loadPokemons={loadPokemons}
           items={types}
           title={type}
         />
@@ -48,7 +48,7 @@ class PokemonsList extends Component {
                 'Base expirience',
                 'Height',
               ]}
-              rows={list.map(pokemon => {
+              rows={pokemons.map(pokemon => {
                 const {
                   id,
                   name,
@@ -76,9 +76,10 @@ class PokemonsList extends Component {
         {type === 'ALL' ? (
           <div>
             <PaginationDesktop
-              loadAllPokemons={loadAllPokemons}
-              pageCount={count / 20}
-              offset={offset}
+              loadPokemons={loadPokemons}
+              activePage={activePage}
+              pageCount={Math.round(count / 20)}
+              begin={begin}
             />
           </div>
         ) : null}
@@ -88,13 +89,14 @@ class PokemonsList extends Component {
 }
 
 export default connect(
-  ({ pokemons: { pokemonsList: pokemons, pokemonFilter }, types }) => ({
+  ({ pokemons: { list: pokemons, pokemonFilter, pagination }, types }) => ({
     pokemonFilter,
+    pagination,
     pokemons,
     types,
   }),
   {
-    loadAllPokemons,
+    loadPokemons,
     loadPokemonsByType,
     loadTypes,
     goTo: path => push(path),

@@ -1,6 +1,6 @@
 import { takeEvery, put, call } from 'redux-saga/effects';
 import {
-  LOAD_ALL_POKEMONS,
+  LOAD_POKEMONS,
   LOAD_POKEMONS_BY_TYPE,
   LOAD_POKEMON_BY_ID,
 } from '../constants/pokemons';
@@ -13,9 +13,9 @@ import pokemon from '../utils/mockData/pokemon.json';
 import { list } from '../utils/mockData/pokemons.json';
 // *** *** ******** //
 
-function* loadAllPokemonsSaga({ offset, limit }) {
+function* loadPokemonsSaga({ offset }) {
   try {
-    const offsetUrl = `?limit=${limit}&offset=${offset}`;
+    const offsetUrl = `?limit=${20}&offset=${offset}`;
 
     // const response = yield call(api.get, `pokemons/${offset ? offsetUrl : ''}`);
 
@@ -27,20 +27,10 @@ function* loadAllPokemonsSaga({ offset, limit }) {
 
     // const pokemons = yield Promise.all(promises);
 
-    yield put(
-      pokemonsLoaded({
-        list,
-        count: 949,
-        pagination: { offset, limit },
-      }),
-    );
+    yield put(pokemonsLoaded(list, 888, offset));
 
     // yield put(
-    //   pokemonsLoaded({
-    //     list: pokemons,
-    //     count,
-    //     pagination: { offset, limit },
-    //   }),
+    //   pokemonsLoaded(pokemons, count, offset),
     // );
   } catch (error) {
     console.log(error);
@@ -62,13 +52,7 @@ function* loadPokemonsByTypeSaga({ pokemonType }) {
 
     // const getPokemonsResult = yield Promise.all(promises);
 
-    yield put(
-      pokemonsLoaded({
-        list: getPokemonsResult,
-        count: 0,
-        pagination: { offset: 0, limit: 0 },
-      }),
-    );
+    yield put(pokemonsLoaded(getPokemonsResult, 0, 0));
   } catch (error) {
     console.log(error);
   }
@@ -86,7 +70,7 @@ function* loadPokemonById({ id }) {
 
 export default function* pokemonsSaga() {
   yield* [
-    takeEvery(LOAD_ALL_POKEMONS, loadAllPokemonsSaga),
+    takeEvery(LOAD_POKEMONS, loadPokemonsSaga),
     takeEvery(LOAD_POKEMONS_BY_TYPE, loadPokemonsByTypeSaga),
     takeEvery(LOAD_POKEMON_BY_ID, loadPokemonById),
   ];
