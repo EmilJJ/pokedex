@@ -13,10 +13,10 @@ import './style.scss';
 class PokemonsList extends Component {
   componentDidMount() {
     const { pagination } = this.props;
-    const { offset } = pagination;
+    const { page } = pagination;
     const { loadPokemons, loadTypes } = this.props;
 
-    loadPokemons(offset);
+    loadPokemons(page);
     loadTypes();
   }
 

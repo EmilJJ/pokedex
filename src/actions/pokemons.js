@@ -11,9 +11,9 @@ import {
   CHANGE_RANGE_DOWN,
 } from '../constants/pokemons';
 
-export const loadPokemons = offset => ({
+export const loadPokemons = (page = 1) => ({
   type: LOAD_POKEMONS,
-  offset,
+  page,
 });
 
 export const loadPokemonsByType = pokemonType => ({
@@ -21,11 +21,11 @@ export const loadPokemonsByType = pokemonType => ({
   pokemonType,
 });
 
-export const pokemonsLoaded = (pokemons, count, offset) => ({
+export const pokemonsLoaded = (pokemons, count, page) => ({
   type: POKEMONS_WAS_LOADED,
   pokemons,
   count,
-  offset,
+  page,
 });
 
 export const pokemonsLoadingFailed = error => ({

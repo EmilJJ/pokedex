@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 import combineEvents from '../utils/combineEvents';
+import config from '../../config';
+
 import {
   POKEMONS_WAS_LOADED,
   LOAD_POKEMONS_BY_TYPE,
@@ -11,6 +13,8 @@ import {
   CHANGE_RANGE_UP,
 } from '../constants/pokemons';
 
+const { pagination: { limit } } = config;
+
 const list = combineEvents(
   {
     [POKEMONS_WAS_LOADED]: (state, { pokemons }) => pokemons,
@@ -20,11 +24,11 @@ const list = combineEvents(
 
 const pagination = combineEvents(
   {
-    [POKEMONS_WAS_LOADED]: (state, { count, offset }) => ({
+    [POKEMONS_WAS_LOADED]: (state, { count, page }) => ({
       ...state,
       count,
-      offset,
-      activePage: offset,
+      page,
+      activePage: page,
     }),
     [CHANGE_RANGE_DOWN]: state => ({ ...state, begin: state.begin - 1 }),
     [CHANGE_RANGE_UP]: state => ({ ...state, begin: state.begin + 1 }),
@@ -35,7 +39,7 @@ const pagination = combineEvents(
       activePage: lastPage,
     }),
   },
-  { offset: 0, count: 0, begin: 1, activePage: 1 },
+  { page: 1, count: 0, begin: 1, activePage: 1 },
 );
 
 const pokemonFilter = combineEvents(
